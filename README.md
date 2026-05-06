@@ -21,3 +21,34 @@
     - Run `bitbake core-image-minimal` to build the image
 
 7. Once build is complete, image will be available under `poky/build/tmp/deploy/images/qemux86-64` directory
+
+## Automated setup script
+
+This repository includes a helper script `yocto-setup.sh` to simplify the Docker build and Yocto build flow.
+
+Examples:
+
+- Build the Docker image:
+  ```bash
+  ./yocto-setup.sh docker-build
+  ```
+- Start an interactive build container:
+  ```bash
+  ./yocto-setup.sh shell
+  ```
+- Build the default Yocto image inside the container:
+  ```bash
+  ./yocto-setup.sh build
+  ```
+- Build a Raspberry Pi image:
+  ```bash
+  ./yocto-setup.sh build raspberrypi core-image-minimal
+  ```
+
+Available commands:
+
+- `clone [branch]` — clone `poky` and `meta-raspberrypi` repositories, default branch `scarthgap`
+- `docker-build` — build the `poky-dev` Docker image
+- `shell` — run an interactive container with the repository mounted
+- `build [machine] [image]` — run `bitbake` inside the container
+- `all [branch]` — clone repos and build the Docker image
