@@ -1,0 +1,8 @@
+pty_test
+*.o
+Makefile.in
+configure
+aclocal.m4
+autom4te.cache/
+.deps/
+.libs/
