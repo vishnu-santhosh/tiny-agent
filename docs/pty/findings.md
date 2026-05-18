@@ -1,5 +1,38 @@
 # PTY Harness — Week 1 Findings
 
+## How to build and run
+
+Requires: `gcc`, `make`, `libutil` (ships with glibc — available on any standard Linux).
+
+```bash
+cd tiny-agent
+make              # compiles to build/pty_test
+./build/pty_test  # runs the harness against /bin/sh
+make clean        # rm -rf build
+```
+
+Expected output:
+
+```
+[cmd] echo 'PTY harness alive'
+[out] PTY harness alive
+$
+[cmd] ls /
+[out] bin  boot  dev  etc  home  ...
+$
+[cmd] uname -a
+[out] Linux <hostname> ...
+$
+[cmd] echo exit_code=$?
+[out] exit_code=0
+$
+[cmd] exit
+[out]
+[done]
+```
+
+The trailing `$ ` after each output block is the shell prompt bleeding through — expected, see "What bleeds through" below.
+
 ## What was tested
 
 `tiny-agent/src/pty.c` — minimal `forkpty()` + read/write loop.

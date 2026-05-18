@@ -1,4 +1,4 @@
-pty_test
+build/
 *.o
 Makefile.in
 configure
