@@ -8,7 +8,7 @@ RASPBERRYPI_REPO="git://git.yoctoproject.org/meta-raspberrypi"
 POKY_DIR="$ROOT_DIR/poky"
 META_RPI_DIR="$ROOT_DIR/meta-raspberrypi"
 DEFAULT_BRANCH="scarthgap"
-DEFAULT_MACHINE="qemux86_64"
+DEFAULT_MACHINE="qemux86-64"
 DEFAULT_IMAGE="core-image-minimal"
 
 usage() {
@@ -73,8 +73,8 @@ container_shell() {
     docker run --rm -it \
         -e LOCAL_UID="$(id -u)" \
         -e LOCAL_GID="$(id -g)" \
-        -v "$ROOT_DIR":"$ROOT_DIR":Z \
-        -w "$ROOT_DIR" \
+        -v "$ROOT_DIR":/workdir:Z \
+        -w /workdir \
         "$DOCKER_IMAGE" \
         bash
 }
@@ -89,8 +89,9 @@ container_build() {
         -e LOCAL_UID="$(id -u)" \
         -e LOCAL_GID="$(id -g)" \
         -e MACHINE="$machine" \
-        -v "$ROOT_DIR":"$ROOT_DIR":Z \
-        -w "$POKY_DIR" \
+        -e IMAGE="$image" \
+        -v "$ROOT_DIR":/workdir:Z \
+        -w /workdir/poky \
         "$DOCKER_IMAGE" \
         bash -lc 'source oe-init-build-env && echo "Edit build/conf/local.conf if needed, then building..." && MACHINE="$MACHINE" bitbake "$IMAGE"'
 }
